@@ -25,6 +25,11 @@ public class Transition {
         return move;
     }
 
+    //Method to read symbol
+    public int getReadSymbol() {
+        return writeSymbol; 
+    }
+
     @Override
     public String toString() {
         return nextState + "," + writeSymbol + "," + move;
