@@ -46,8 +46,17 @@ public class TMState {
         isFinal = finalState;
     }
 
-    //toString method for debugging or output
+    //Method to get the transition for a given symbol
+    public Transition getTransitionForSymbol(int symbol) {
+        for (Transition transition : transitions) {
+            if (transition.getReadSymbol() == symbol) {
+                return transition;
+            }
+        }
+        return null; 
+    }
 
+    //toString method for debugging or output
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
