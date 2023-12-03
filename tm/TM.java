@@ -67,25 +67,38 @@ public class TM {
         //Iterate through the input string and simulate the Turing Machine
         for (int i = 0; i < inputString.length(); i++) {
             int currentSymbol = Character.getNumericValue(inputString.charAt(i));
-
+    
             //Set the current tape symbol
             setCurrentTapeSymbol(currentSymbol);
-
+    
             //Get the current transition for the current state and symbol
             TMState currentState = getCurrentState();
+    
+            // Ensure currentState is not null before trying to get the transition
+            if (currentState == null) {
+                System.out.println("currentState is null!");
+                break;
+            }
+    
             Transition currentTransition = currentState.getTransitionForSymbol(currentSymbol);
-
+    
+            //Check if there's a transition for the given symbol
+            if (currentTransition == null) {
+                System.out.println("No transition found for symbol " + currentSymbol + " in state " + currentState);
+                break;
+            }
+    
             //Update the machine state, write symbol, and move tape
             transitionToState(currentTransition.getNextState());
             setCurrentTapeSymbol(currentTransition.getWriteSymbol());
-
+    
             //Move the tape head
             if (currentTransition.getMove() == 'L') {
                 moveTapeLeft();
             } else if (currentTransition.getMove() == 'R') {
                 moveTapeRight();
             }
-
+    
             //Check if the machine is halted
             if (isHalted()) {
                 break;
@@ -93,7 +106,7 @@ public class TM {
         }
         printTapeContent();
     }
-
+    
     private void printTapeContent() {
         for (int symbol : tape) {
             System.out.print(symbol);
